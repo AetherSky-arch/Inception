@@ -19,13 +19,13 @@
 # Default server configuration
 #
 server {
-	listen 80 default_server;
-	listen [::]:80 default_server;
+	# listen 80 default_server;
+	# listen [::]:80 default_server;
 
 	# SSL configuration
 	#
-	# listen 443 ssl default_server;
-	# listen [::]:443 ssl default_server;
+	listen 443 ssl;
+	listen [::]:443 ssl;
 	#
 	# Note: You should disable gzip for SSL traffic.
 	# See: https://bugs.debian.org/773332
@@ -44,6 +44,11 @@ server {
 	index index.php index.html index.htm index.nginx-debian.html;
 
 	server_name arguez.42.fr;
+
+  ssl_certificate		/etc/nginx/ssl/arguez.crt;
+	ssl_certificate_key	/etc/nginx/ssl/arguez.key;
+
+  ssl_protocols		TLSv1.2 TLSv1.3;
 
 	location / {
 		# First attempt to serve request as file, then
