@@ -1,4 +1,4 @@
-if ! [[ $(command -v vagrant) ]]; then
+if [[ ! $(command -v vagrant) ]]; then
     echo "ERROR: Vagrant not installed. Exiting..."
     exit
 fi
