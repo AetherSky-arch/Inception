@@ -24,8 +24,7 @@ else
     fi
 fi
 
-# boots up VM
-echo "INFO: Booting up VM"
+echo "\nINFO: Booting up VM"
 vagrant up
 
 echo "INFO: Installing packages, you may be asked to enter your password a few times. default password is \'vagrant\'"
