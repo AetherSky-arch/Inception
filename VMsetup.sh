@@ -10,11 +10,11 @@ fi
 
 cd $VAGRANT_HOME
 
-if [ -f ./Vagrantfile ]; then
+if [[ -f ./Vagrantfile ]]; then
     echo "INFO: Vagrantfile already exists, skipping creation"
 else
     vagrant init hashicorp/bionic64
-    if [ ! -f ./Vagrantfile ]; then
+    if [[ ! -f ./Vagrantfile ]]; then
         echo "ERROR: Failed to create Vagrantfile. Exiting..."
         exit
     fi
