@@ -25,11 +25,16 @@ else
     fi
 fi
 
-echo "\nINFO: Booting up VM"
+echo "
+INFO: Booting up VM"
 vagrant up
 
 echo "\nINFO: Installing packages, you may be asked to enter your password a few times. default password is 'vagrant'"
-scp -rp -P 2222 $ORIGIN_DIR/requirements $ORIGIN_DIR/docker-compose.yml $ORIGIN_DIR/install_packages.sh vagrant@127.0.0.1:~
+scp -rp -P 2222 $ORIGIN_DIR/requirements $ORIGIN_DIR/docker-compose.yml $ORIGIN_DIR/install_packages.sh $ORIGIN_DIR/hosts.txt vagrant@127.0.0.1:~
 ssh vagrant@127.0.0.1 -p 2222 sudo bash install_packages.sh
 
-echo "\nINFO: setup completed!"
+ssh vagrant@127.0.0.1 -p 2222 sudo rm -rf /etc/hosts
+ssh vagrant@127.0.0.1 -p 2222 sudo mv /home/vagrant/hosts.txt /etc/hosts
+
+echo "
+INFO: setup completed!"
