@@ -10,7 +10,7 @@ services:
     ports:
       - "443:443"
     volumes:
-      - ./web:/var/www/html
+      - ~/data:/var/www/html
   wordpress:
     env_file: ".env"
     build: requirements/wordpress/.
@@ -20,12 +20,14 @@ services:
     networks:
       inception:
     volumes:
-      - ./web:/var/www/html
+      - ~/data:/var/www/html
   mariadb:
     build: requirements/mariadb
     container_name: mariadb
     networks:
       inception:
+    volumes:
+      - ~/data:/var/www/html
 
 networks:
   inception:
