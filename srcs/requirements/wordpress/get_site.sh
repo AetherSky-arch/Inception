@@ -7,6 +7,6 @@ chmod +x wp-cli.phar
 ./wp-cli.phar config create --dbname=wordpress --dbuser=wpuser --dbpass=password --dbhost=mariadb --allow-root
 ./wp-cli.phar core install --url=arguez.42.fr --title=inception --admin_user=$ADMINUSR --admin_password=$ADMINPASSWD --admin_email=$ADMINEMAIL --allow-root
 
-./wp-cli.phar user create $USR $USREMAIL --role=author --user_pass=$PASSWD
+./wp-cli.phar user create $USR $USREMAIL --role=author --user_pass=$PASSWD --allow-root
 
 php-fpm7.4 -F
