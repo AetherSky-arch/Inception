@@ -3,38 +3,38 @@ set -e
 ORIGIN_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 
 if [[ ! $(command -v vagrant) ]]; then
-    echo "ERROR: Vagrant not installed. Exiting..."
+    echo -e "ERROR: Vagrant not installed. Exiting..."
     exit
 fi
 
 if [[ -z "${VAGRANT_HOME}" ]]; then
-    echo "WARNING: VAGRANT_HOME undefined, defaulting to \$HOME/goinfre"
+    echo -e "WARNING: VAGRANT_HOME undefined, defaulting to \$HOME/goinfre"
     export VAGRANT_HOME="$HOME/goinfre"
 fi
 
 cd $VAGRANT_HOME
 
-echo "Creating VM..."
+echo -e "Creating VM..."
 if [[ -f ./Vagrantfile ]]; then
-    echo "INFO: Vagrantfile already exists, skipping creation"
+    echo -e "INFO: Vagrantfile already exists, skipping creation"
 else
     vagrant init hashicorp/bionic64
     if [[ ! -f ./Vagrantfile ]]; then
-        echo "ERROR: Failed to create Vagrantfile. Exiting..."
+        echo -e "ERROR: Failed to create Vagrantfile. Exiting..."
         exit
     fi
 fi
 
-echo "
+echo -e "
 INFO: Booting up VM"
 vagrant up
 
-echo "\nINFO: Installing packages, you may be asked to enter your password a few times. default password is 'vagrant'"
+echo -e "\nINFO: Installing packages, you may be asked to enter your password a few times. default password is 'vagrant'"
 scp -rp -P 2222 $ORIGIN_DIR/requirements $ORIGIN_DIR/docker-compose.yml $ORIGIN_DIR/install_packages.sh $ORIGIN_DIR/hosts.txt vagrant@127.0.0.1:~
 ssh vagrant@127.0.0.1 -p 2222 sudo bash install_packages.sh
 
 ssh vagrant@127.0.0.1 -p 2222 sudo rm -rf /etc/hosts
 ssh vagrant@127.0.0.1 -p 2222 sudo mv /home/vagrant/hosts.txt /etc/hosts
 
-echo "
+echo -e "
 INFO: setup completed!"
