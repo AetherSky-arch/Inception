@@ -4,8 +4,8 @@ if [[ ! $(command -v vagrant) ]]; then
 fi
 
 if [[ -z "${VAGRANT_HOME}" ]]; then
-    echo "WARNING: VAGRANT_HOME undefined, defaulting to /home/arguez/goinfre"
-    export VAGRANT_HOME="/home/arguez/goinfre"
+    echo "WARNING: VAGRANT_HOME undefined, defaulting to \$HOME/goinfre"
+    export VAGRANT_HOME="$HOME/goinfre"
 fi
 
 cd $VAGRANT_HOME
