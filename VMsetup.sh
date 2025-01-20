@@ -1,5 +1,7 @@
 set -e
 
+ORIGIN_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+
 if [[ ! $(command -v vagrant) ]]; then
     echo "ERROR: Vagrant not installed. Exiting..."
     exit
@@ -27,7 +29,7 @@ echo "INFO: Booting up VM"
 vagrant up
 
 echo "INFO: Installing packages, you may be asked to enter your password a few times. default password is \'vagrant\'"
-scp -rp ./requirements ./docker-compose.yml ./install_packages.sh vagrant@127.0.0.1:~ -P 2222
+scp -rp $ORIGIN_DIR/requirements $ORIGIN_DIR/docker-compose.yml $ORIGIN_DIR/install_packages.sh vagrant@127.0.0.1:~ -P 2222
 ssh vagrant@127.0.0.1 -p 2222 sudo bash install_packages.sh
 
 echo "INFO: setup completed!"
