@@ -1,40 +1,44 @@
 set -e
 
+WHITE='\033[0m'
+RED='\033[0;31m'
+YELLOW='\033[1;33m'
+BLUE='\033[0;34m'
+GREEN='\033[0;32m'
+
 ORIGIN_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 
 if [[ ! $(command -v vagrant) ]]; then
-    echo -e "ERROR: Vagrant not installed. Exiting..."
+    echo -e "${RED}ERROR: Vagrant not installed. Exiting...${WHITE}"
     exit
 fi
 
 if [[ -z "${VAGRANT_HOME}" ]]; then
-    echo -e "WARNING: VAGRANT_HOME undefined, defaulting to \$HOME/goinfre"
+    echo -e "${YELLOW}WARNING: VAGRANT_HOME undefined, defaulting to \$HOME/goinfre${WHITE}"
     export VAGRANT_HOME="$HOME/goinfre"
 fi
 
 cd $VAGRANT_HOME
 
-echo -e "Creating VM..."
+echo -e "${GREEN}Creating VM...${WHITE}"
 if [[ -f ./Vagrantfile ]]; then
-    echo -e "INFO: Vagrantfile already exists, skipping creation"
+    echo -e "${BLUE}INFO: Vagrantfile already exists, skipping creation${WHITE}"
 else
     vagrant init hashicorp/bionic64
     if [[ ! -f ./Vagrantfile ]]; then
-        echo -e "ERROR: Failed to create Vagrantfile. Exiting..."
+        echo -e "${RED}ERROR: Failed to create Vagrantfile. Exiting...${WHITE}"
         exit
     fi
 fi
 
-echo -e "
-INFO: Booting up VM"
+echo -e "\n${BLUE}INFO: Booting up VM${WHITE}"
 vagrant up
 
-echo -e "\nINFO: Installing packages, you may be asked to enter your password a few times. default password is 'vagrant'"
+echo -e "\n${BLUE}INFO: Installing packages, you may be asked to enter your password a few times. default password is 'vagrant'${WHITE}"
 scp -rp -P 2222 $ORIGIN_DIR/requirements $ORIGIN_DIR/docker-compose.yml $ORIGIN_DIR/install_packages.sh $ORIGIN_DIR/hosts.txt vagrant@127.0.0.1:~
 ssh vagrant@127.0.0.1 -p 2222 sudo bash install_packages.sh
 
 ssh vagrant@127.0.0.1 -p 2222 sudo rm -rf /etc/hosts
 ssh vagrant@127.0.0.1 -p 2222 sudo mv /home/vagrant/hosts.txt /etc/hosts
 
-echo -e "
-INFO: setup completed!"
+echo -e "\n${GREEN}INFO: setup completed!${WHITE}"
