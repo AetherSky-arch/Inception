@@ -14,6 +14,7 @@ fi
 
 cd $VAGRANT_HOME
 
+echo "Creating VM..."
 if [[ -f ./Vagrantfile ]]; then
     echo "INFO: Vagrantfile already exists, skipping creation"
 else
@@ -27,8 +28,8 @@ fi
 echo "\nINFO: Booting up VM"
 vagrant up
 
-echo "INFO: Installing packages, you may be asked to enter your password a few times. default password is \'vagrant\'"
+echo "\nINFO: Installing packages, you may be asked to enter your password a few times. default password is 'vagrant'"
 scp -rp -P 2222 $ORIGIN_DIR/requirements $ORIGIN_DIR/docker-compose.yml $ORIGIN_DIR/install_packages.sh vagrant@127.0.0.1:~
 ssh vagrant@127.0.0.1 -p 2222 sudo bash install_packages.sh
 
-echo "INFO: setup completed!"
+echo "\nINFO: setup completed!"
