@@ -3,7 +3,7 @@ set -e
 sudo apt update
 sudo apt upgrade -y
 
-sudo apt install xinit xauth firefox sendmail -y
+sudo apt install xinit xauth firefox -y
 
 # installs docker
 sudo apt-get update
